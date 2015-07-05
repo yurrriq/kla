@@ -48,7 +48,14 @@
     (lists:map
      (lambda (x)
        (wrap-exported-func mod x))
-     funcs)))
+     (filter-funcs funcs))))
+
+(defun filter-funcs (funcs)
+  (let ((skips '(module_info)))
+    (lists:filter
+      (match-lambda
+        ((`#(,func ,_)) (lists:member func skips)))
+      funcs)))
 
 (defun wrap-exported-func
   ((mod `#(,func ,arity))
