@@ -42,3 +42,16 @@
     (lambda (x)
       (make-func x mod))
     func-list))
+
+(defun wrap-mod-funcs (mod)
+  (let ((funcs (lutil-file:get-module-exports mod)))
+    (lists:map
+     (lambda (x)
+       (wrap-exported-func mod x))
+     funcs)))
+
+(defun wrap-exported-func
+  ((mod `#(,func ,arity))
+   (let ((func-args (make-args arity)))
+     `(defun ,func ,func-args
+        (apply ',mod ',func (list ,@func-args))))))

@@ -69,3 +69,13 @@
       (defun func-y (arg-1 arg-2)
         (apply 'my-mod 'func_y (list arg-1 arg-2))))
     (kla:make-funcs '((func-y 0) (func-y 1) (func-y 2)) 'my-mod)))
+
+(deftest wrap-exported-func
+  (is-equal
+   '(defun my-func (arg-1)
+       (apply 'my-mod 'my-func (list arg-1)))
+   (kla:wrap-exported-func 'my-mod #(my-func 1)))
+  (is-equal
+   '(defun my-func (arg-1 arg-2)
+       (apply 'my-mod 'my-func (list arg-1 arg-2)))
+   (kla:wrap-exported-func 'my-mod #(my-func 2))))
