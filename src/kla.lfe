@@ -54,7 +54,7 @@
   (let ((skips '(module_info)))
     (lists:filter
       (match-lambda
-        ((`#(,func ,_)) (lists:member func skips)))
+        ((`#(,func ,_)) (not (lists:member func skips))))
       funcs)))
 
 (defun wrap-exported-func
