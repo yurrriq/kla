@@ -7,6 +7,7 @@
 
 *An LFE Wrapper Library used to Dress Up Erlang Libraries in a Lispy Costume*
 
+
 ##### Contents
 
 * [Introduction](#introduction-)
@@ -14,18 +15,19 @@
 * [Installation](#installation-)
 * [Usage](#usage-)
 
+
 ## Introduction [&#x219F;](#contents)
 
 Add content to me here!
 
+
 ## Dependencies [&#x219F;](#contents)
 
-As of version 0.5.0, This project assumes that you have
+As of version 0.5.0, this project assumes that you have
 [rebar3](https://github.com/rebar/rebar3) installed somwhere in your ``$PATH``.
-And no longer uses the old version of rebar.
+It no longer uses the old version of rebar. If you do not wish to use rebar3,
+you may use the most recent rebar2-compatible release of lutil: 0.4.2.
 
-Note that if you do not wish to use rebar3, you may use the most recent
-rebar2-compatible release of lutil: 0.4.2.
 
 ## Installation [&#x219F;](#contents)
 
