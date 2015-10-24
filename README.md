@@ -27,7 +27,7 @@ And no longer uses the old version of rebar.
 Note that if you do not wish to use rebar3, you may use the most recent
 rebar2-compatible release of lutil: 0.4.2.
 
-## Installation
+## Installation [&#x219F;](#contents)
 
 Just add it to your ``rebar.config`` deps:
 
@@ -47,6 +47,6 @@ And then do the usual:
 ```
 
 
-## Usage
+## Usage [&#x219F;](#contents)
 
 Add content to me here!
