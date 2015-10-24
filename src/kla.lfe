@@ -44,7 +44,7 @@
     func-list))
 
 (defun wrap-mod-funcs (mod)
-  (let ((funcs (kla-lutil:get-module-exports mod)))
+  (let ((funcs (kla-util:get-module-exports mod)))
     (lists:map
      (lambda (x)
        (wrap-exported-func mod x))
