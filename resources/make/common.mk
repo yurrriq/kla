@@ -10,16 +10,18 @@ SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
-SCRIPT_PATH=$(DEPS)/lfe/bin:.:./bin:"$(PATH)":/usr/local/bin
+SCRIPT_PATH = $(DEPS)/lfe/bin:.:./bin:"$(PATH)":/usr/local/bin
+REBAR = rebar3
+REBAR_WIN = rebar3.cmd
 ifeq ($(shell which lfetool),)
-LFETOOL=$(BIN_DIR)/lfetool
+LFETOOL = $(BIN_DIR)/lfetool
 else
-LFETOOL=lfetool
+LFETOOL = lfetool
 endif
-ERL_LIBS=$(shell $(LFETOOL) info erllibs):.:..
+ERL_LIBS = $(shell $(LFETOOL) info erllibs):.:..
 OS := $(shell uname -s)
 ifeq ($(OS),Linux)
-        HOST=$(HOSTNAME)
+        HOST = $(HOSTNAME)
 endif
 ifeq ($(OS),Darwin)
         HOST = $(shell scutil --get ComputerName)
@@ -40,10 +42,6 @@ get-version:
 	-eval "lfe_io:format(\"~p~n\",['kla-util':'get-versions'()])." \
 	-noshell -s erlang halt
 
-get-deps:
-	@echo "Getting dependencies ..."
-	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd get-deps || rebar get-deps
-
 clean-ebin:
 	@echo "Cleaning ebin dir ..."
 	@rm -f $(OUT_DIR)/*.beam
@@ -51,18 +49,18 @@ clean-ebin:
 clean-eunit:
 	-@PATH=$(SCRIPT_PATH) $(LFETOOL) tests clean
 
-compile: get-deps clean-ebin
+compile: clean-ebin
 	@echo "Compiling project code and dependencies ..."
-	@which rebar.cmd >/dev/null 2>&1 && \
-	PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) rebar.cmd compile || \
-	PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) rebar compile
+	@which $(REBAR_WIN) >/dev/null 2>&1 && \
+	PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(REBAR_WIN) compile || \
+	PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(REBAR) compile
 
 compile-no-deps: clean-ebin
 	@echo "Compiling only project code ..."
-	@which rebar.cmd >/dev/null 2>&1 && \
+	@which $(REBAR_WIN) >/dev/null 2>&1 && \
 	PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) \
-	rebar.cmd compile skip_deps=true || \
-	PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) rebar compile skip_deps=true
+	$(REBAR_WIN) compile skip_deps=true || \
+	PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(REBAR) compile skip_deps=true
 
 compile-tests: clean-eunit
 	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) tests build
@@ -88,7 +86,7 @@ shell-no-deps: compile-no-deps
 	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) erl
 
 clean: clean-ebin clean-eunit
-	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd clean || rebar clean
+	@which $(REBAR_WIN) >/dev/null 2>&1 && $(REBAR_WIN) clean || $(REBAR) clean
 
 check-unit-only:
 	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) tests unit
@@ -99,13 +97,13 @@ check-integration-only:
 check-system-only:
 	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) tests system
 
-check-unit-with-deps: get-deps compile compile-tests check-unit-only
+check-unit-with-deps: compile compile-tests check-unit-only
 check-unit: clean-eunit compile-no-deps check-unit-only
 check-integration: clean-eunit compile check-integration-only
 check-system: clean-eunit compile check-system-only
 check-all-with-deps: clean-eunit compile check-unit-only \
 	check-integration-only check-system-only clean-eunit
-check-all: get-deps clean-eunit compile-no-deps
+check-all: clean-eunit compile-no-deps
 	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) tests all
 
 check: check-unit-with-deps
