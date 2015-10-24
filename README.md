@@ -26,7 +26,7 @@ Add content to me here!
 As of version 0.5.0, this project assumes that you have
 [rebar3](https://github.com/rebar/rebar3) installed somwhere in your ``$PATH``.
 It no longer uses the old version of rebar. If you do not wish to use rebar3,
-you may use the most recent rebar2-compatible release of lutil: 0.4.2.
+you may use the most recent rebar2-compatible release of kla: 0.4.2.
 
 
 ## Installation [&#x219F;](#contents)
