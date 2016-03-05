@@ -8,5 +8,4 @@ ebin/*
 bin/expm
 *.dump
 .rebar
-rebar.lock
 _build/*
