@@ -51,7 +51,9 @@
      (filter-funcs funcs))))
 
 (defun filter-funcs (funcs)
-  (let ((skips '(LFE-EXPAND-EXPORTED-MACRO module_info)))
+  (let ((skips '($handle_undefined_function
+                 LFE-EXPAND-EXPORTED-MACRO
+                 module_info)))
     (lists:filter
       (match-lambda
         ((`#(,func ,_)) (not (lists:member func skips))))
