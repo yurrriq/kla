@@ -51,7 +51,7 @@
      (filter-funcs funcs))))
 
 (defun filter-funcs (funcs)
-  (let ((skips '(module_info)))
+  (let ((skips '(LFE-EXPAND-EXPORTED-MACRO module_info)))
     (lists:filter
       (match-lambda
         ((`#(,func ,_)) (not (lists:member func skips))))
