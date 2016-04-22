@@ -2,7 +2,7 @@
 
 [![][kla-logo]][kla-logo-large]
 
-[kla-logo]: resources/images/vikings-small.png
+[kla-logo]: priv/images/vikings-small.png
 [kla-logo-large]: http://callego.deviantart.com/art/Viking-Clothes-334955145
 
 *An LFE Wrapper Library used to Dress Up Erlang Libraries in a Lispy Costume*
